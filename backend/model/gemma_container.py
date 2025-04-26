@@ -1,11 +1,14 @@
 import kagglehub
+import kaggle
 
 # Download latest version
 path = kagglehub.model_download("keras/gemma/keras/gemma_1.1_instruct_2b_en")
-
 print("Path to model files:", path)
 
 def extractTopics(inputText):
+    exampleText = "Homelessness and Property Crime in Seattle"
+    systemMessage = "You are a civic data assistant helping extract public policy topics from user messages."
+    userMessage = "Extract main issues from: 'Homelessness and electric bills in Seattle.' List them, separated by commas."
 
     topics = []
 
