@@ -1,5 +1,5 @@
 from flask import Flask
-from models import db
+from DBModel import db
 from routes import bp
 
 app = Flask(__name__)
