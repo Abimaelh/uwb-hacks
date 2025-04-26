@@ -1,1 +1,1 @@
-# uwb-hacks
+# 2025 UWB Hackathon
