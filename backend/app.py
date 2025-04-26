@@ -3,22 +3,28 @@ from flask_cors import CORS
 
 import requests
 
-keywords = ["homeless", "shelter"]
+def APIret(keywords):
+    query = " ".join(keywords)  # Combines keywords into one search string
 
-query = " ".join(keywords)  # Combines keywords into one search string
+    headers = {
+        "X-API-KEY": "cd0c021e-07d6-4456-88aa-4133a34e29fc"
+    }
 
-headers = {
-    "X-API-KEY": "cd0c021e-07d6-4456-88aa-4133a34e29fc"
-}
+    params = {
+        "q": query,
+        "jurisdiction": "California",  # optional
+        "per_page": 10
+    }
 
-params = {
-    "q": query,
-    "jurisdiction": "California",  # optional
-    "per_page": 10
-}
+    response = requests.get("https://v3.openstates.org/bills", headers=headers, params=params)
+    data = response.json()
 
-response = requests.get("https://v3.openstates.org/bills", headers=headers, params=params)
-data = response.json()
+    for bill in data.get("results", []):
+        print(f"{bill['identifier']}: {bill['title']}, {bill['subject']}")
 
-for bill in data.get("results", []):
-    print(f"{bill['identifier']}: {bill['title']}, {bill['subject']}")
+
+if __name__ == "__main__":
+    keywords = ["homeless", "shelter"]
+
+    spit = APIret(keywords)
+    print(spit)
