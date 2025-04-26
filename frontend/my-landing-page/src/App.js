@@ -11,7 +11,11 @@ function App() {
       summMessage: '',
       source: ''
     });
-  
+    const[showResults, setShowResults] = useState(
+      false
+    )
+
+
     const handleChange = (event) => {
       const { name, value } = event.target;
       setFormData(prevFormData => ({
@@ -24,6 +28,19 @@ function App() {
       event.preventDefault();
       window.alert('Form Data Submitted:'+ formData.message);
       //back end placeholder logic here
+      // Simple POST request with a JSON body using fetch
+      const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'React POST Request Example' })
+      };
+      fetch('https://reqres.in/api/posts', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setShowResults(true);
+            setSummaryData({summMessage: "this is not ai", source: "big brain"})
+          });
+
       //logic for converting the show results state
     };
 
