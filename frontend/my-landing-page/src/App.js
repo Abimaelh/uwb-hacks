@@ -32,14 +32,15 @@ function App() {
       const requestOptions = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: 'React POST Request Example' })
+          body: JSON.stringify({ message: formData.message })
       };
-      fetch('https://reqres.in/api/posts', requestOptions)
+      fetch("http://localhost:5000/submit", requestOptions)
           .then(response => response.json())
           .then(data => {
             setShowResults(true);
-            setSummaryData({summMessage: "this is not ai", source: "big brain"})
-          });
+            setSummaryData({summMessage: data.summMessage, source: data.source})
+          }
+      ).catch(error => {console.log(error); window.alert(error)})
 
       //logic for converting the show results state
     };

@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import requests
+HOST = 'localhost'
+PORT = '5000'
+server = Flask(__name__)
+CORS(server)
 
 def APIret(keywords):
     query = " ".join(keywords)  # Combines keywords into one search string
@@ -22,8 +26,19 @@ def APIret(keywords):
     for bill in data.get("results", []):
         print(f"{bill['identifier']}: {bill['title']}, {bill['subject']}")
 
+@server.route('/submit', methods=['POST'])
+def submit():
+    data = request.get_json()
+    print("Received message:", data['message'])
+
+    return jsonify({
+        'summMessage': 'This is your AI summary!',
+        'source': 'Python backend'
+    })
+
 
 if __name__ == "__main__":
+    server.run(host=HOST, port=PORT)
     keywords = ["homeless", "shelter"]
 
     spit = APIret(keywords)
