@@ -27,7 +27,6 @@ function App() {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-      window.alert('Form Data Submitted:'+ formData.message);
       //back end placeholder logic here
       // Simple POST request with a JSON body using fetch
       const requestOptions = {
@@ -70,7 +69,6 @@ function App() {
             />
           </div>
           <button type="submit">Submit</button>
-          <Button/>
 
     </form>
       </header>
