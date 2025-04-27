@@ -33,10 +33,13 @@ def submit():
     print("Received message:", data['message'])
 
     topics = gemma_container.extractTopics(data['message'])
-    
+    topics_summary = ", ".join(topics)
+
+    api_results = APIret(topics)
 
     return jsonify({
-        'summMessage': 'This is your AI summary!',
+        'summMessage': f'The topics are: {topics_summary}',
+        'apiResults': api_results,
         'source': 'Python backend'
     })
 

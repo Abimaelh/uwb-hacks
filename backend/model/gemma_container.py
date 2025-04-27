@@ -1,10 +1,16 @@
+import os
 import kagglehub
 import kaggle
 from huggingface_hub import login
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 
-login()
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+if not HUGGINGFACE_API_KEY:
+    raise ValueError("HuggingFace API key not found")
+
+login(token=HUGGINGFACE_API_KEY)
+
 # Download latest version
 tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b-it")
 model = AutoModelForCausalLM.from_pretrained(
