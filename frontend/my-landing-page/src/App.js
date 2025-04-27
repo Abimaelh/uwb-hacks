@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from "react";
+import Button from './components/Button';
 var showResults = false;
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
             />
           </div>
           <button type="submit">Submit</button>
+          <Button/>
 
     </form>
       </header>
