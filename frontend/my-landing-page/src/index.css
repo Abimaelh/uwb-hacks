@@ -1,3 +1,8 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+/*import statement might not be necessary in EVERY .css file but I'm doing it anyway until it causes a problem*/
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

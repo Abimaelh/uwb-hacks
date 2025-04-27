@@ -65,7 +65,7 @@ function App() {
         <h2>POLISEE</h2>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="message">Message:</label>
+            <label htmlFor="message">Message</label>
             <textarea
               id="message"
               name="message"
@@ -73,7 +73,7 @@ function App() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit">Submit</button>
+          <button class="button" type="submit">Submit</button>
 
     </form>
       </header>

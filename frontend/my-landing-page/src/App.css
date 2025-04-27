@@ -1,3 +1,8 @@
+@import "tailwindcss";
+/*this file in particular is probably the main file that probably needs the import statement.*/
+/*do imports at the top, EXCEPT after charset and layer declarations, if*/
+/*these colors can be changed because WOW they are ugly*/
+
 .App {
   text-align: center;
 }
@@ -13,8 +18,19 @@
   }
 }
 
+.button {
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button:hover {
+
+  background-color: pink;
+  color: white;
+}
+
 .App-header {
-  background-color: #282c34;
+  background-color: #a2b0cd;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,6 +38,58 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+h2 {
+  position: sticky;
+  bottom: 90%;
+
+  border-radius: 10px;
+  background-color: #61dafb;
+  padding: 20px;
+  width: 500px;
+  height: 75px;
+}
+
+label {
+  position: fixed;
+  left: 75%;
+  bottom: 75%;
+  border-radius: 10px;
+  background-color: #61dafb;
+  padding: 20px;
+  width: 150px;
+  height: 75px;
+}
+
+textarea {
+  position: fixed;
+  left: 35%;
+  top: 15.5%;
+  border-radius: 10px;
+  background-color: #61dafb;
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+}
+
+button {
+  position: fixed;
+  left: 75%;
+  top: 25.5%;
+  border: none;
+  border-radius: 10px;
+  width: 150px;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
 }
 
 .App-link {
