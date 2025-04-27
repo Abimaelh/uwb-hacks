@@ -1,16 +1,16 @@
 import kagglehub
 import kaggle
+from huggingface_hub import login
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 
+login()
 # Download latest version
-model_path = kagglehub.model_download("keras/gemma/keras/gemma_1.1_instruct_2b_en")
-print("Path to model files:", model_path)
-
-# Load the model (assuming you have enough GPU/CPU memory)
-# You might need to adjust based on exact KaggleHub directory structure
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto", torch_dtype=torch.float16)
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b-it")
+model = AutoModelForCausalLM.from_pretrained(
+    "google/gemma-2b-it",
+    torch_dtype=torch.bfloat16
+)
 
 # Initialize pipeline
 nlp_pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
@@ -39,7 +39,7 @@ def extractTopics(inputText: str):
 
         # Optional: remove duplicates
         topics = list(dict.fromkeys(topics))
-
+        print(type(topics))
         return topics
 
     except Exception as e:

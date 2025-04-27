@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import requests
+from model import gemma_container
 HOST = 'localhost'
 PORT = '5000'
 server = Flask(__name__)
@@ -30,6 +31,9 @@ def APIret(keywords):
 def submit():
     data = request.get_json()
     print("Received message:", data['message'])
+
+    topics = gemma_container.extractTopics(data['message'])
+    
 
     return jsonify({
         'summMessage': 'This is your AI summary!',
