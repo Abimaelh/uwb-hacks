@@ -33,7 +33,7 @@ function App() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: formData.message })
       };
-      fetch("/submit", requestOptions)
+      fetch("http://localhost:5000/submit", requestOptions)
           .then(response => response.json())
           .then(data => {
             setShowResults(true);
