@@ -7,3 +7,6 @@ npm start
 Then in another terminal:
 cd backend/
 python app.py (ie however you run python files)
+
+[Landing Page](landing-page.png)
+[Results Page](results-page.png)
