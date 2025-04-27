@@ -5,8 +5,8 @@ from huggingface_hub import login
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-print(f"HUGGINGFACE_API_KEY: {HUGGINGFACE_API_KEY}")
+HUGGINGFACE_API_KEY = "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"
+#os.getenv("HUGGINGFACE_API_KEY")
 if not HUGGINGFACE_API_KEY:
     raise ValueError("HuggingFace API key not found")
 
@@ -52,9 +52,37 @@ def extractTopics(inputText: str):
     except Exception as e:
         print(f"Error extracting topics: {e}")
         return []
+    
+def summarizeDatabaseReturn(inputText: str):
+    print("Summarising text")
+    system_prompt = (
+        "You are a civic data assistant helping summarise the public policy listings from a database, in Washington state. "
+        "Given the listings from the database, output a simple summary of the main issues, the people involved, and the SPECIFIC policies proposed to tackle them such as bills, legislative actions, and individuals involved in the legislative actions. "
+        "Keep the wording simple for a layman's understanding. Offer context if needed, but avoid political biases."
+    )
+
+    prompt = f"{system_prompt}\n\nInput: {inputText}\n\nSummary:"
+
+    try:
+        output = nlp_pipe(prompt, max_new_tokens=50, temperature=0.2, do_sample=False)
+        raw_text = output[0]['generated_text']
+        
+        # Extract only the part after 'Topics:'
+        if 'Summary:' in raw_text:
+            summary_text = raw_text.split('Summary:')[-1].strip()
+        else:
+            summary_text = raw_text.strip()
+
+        print("Topics summarised")
+        return summary_text
+
+    except Exception as e:
+        print(f"Error finding summary: {e}")
+        return None
+
 
 #Example usage
-if name == "main":
+if __name__ == "main":
     test_text = "Homelessness and electric bills in Seattle, as well as rising healthcare costs."
     topics = extractTopics(test_text)
     print("Extracted Topics:", topics)

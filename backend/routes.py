@@ -3,7 +3,7 @@ from DBModel import db, Interest
 from model import gemma_container
 import requests
 
-bp = Blueprint('api', name)
+bp = Blueprint('api', __name__)
 
 def APIret(keywords):
     query = " ".join(keywords)  # Combines keywords into one search string
@@ -20,6 +20,7 @@ def APIret(keywords):
 
     response = requests.get("https://v3.openstates.org/bills", headers=headers, params=params)
     data = response.json()
+    return data
 
 @bp.route('/submit', methods=['POST'])
 def submit_interest():
