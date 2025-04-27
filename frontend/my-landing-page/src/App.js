@@ -1,6 +1,5 @@
-import logo from './logo.svg';
+import { useState } from "react";
 import './App.css';
-import {useState} from "react";
 var showResults = false;
 
 function App() {
@@ -34,7 +33,7 @@ function App() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: formData.message })
       };
-      fetch("http://localhost:5000/submit", requestOptions)
+      fetch("/submit", requestOptions)
           .then(response => response.json())
           .then(data => {
             setShowResults(true);
@@ -45,12 +44,17 @@ function App() {
       //logic for converting the show results state
     };
 
+    const handleGoBack = () => {
+      setShowResults(false);
+    }
+
   if(showResults) {
     return (
-      <div className="App">
+      <div>
       <p>{formData.message}</p>
       <p>{summaryData.summMessage}</p>
       <p>Sources</p>
+      <button onClick={handleGoBack}>Go Back</button>
       </div>
     );
   }
