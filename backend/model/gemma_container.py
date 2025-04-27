@@ -1,18 +1,25 @@
+import os
 import kagglehub
 import kaggle
+from huggingface_hub import login
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 import torch
 
-# Download latest version
-model_path = kagglehub.model_download("keras/gemma/keras/gemma_1.1_instruct_2b_en")
-print("Path to model files:", model_path)
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+print(f"HUGGINGFACE_API_KEY: {HUGGINGFACE_API_KEY}")
+if not HUGGINGFACE_API_KEY:
+    raise ValueError("HuggingFace API key not found")
 
-# Load the model (assuming you have enough GPU/CPU memory)
-# You might need to adjust based on exact KaggleHub directory structure
-model = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto", torch_dtype=torch.float16)
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+login(token=HUGGINGFACE_API_KEY)
 
-# Initialize pipeline
+#Download latest version
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b-it")
+model = AutoModelForCausalLM.from_pretrained(
+    "google/gemma-2b-it",
+    torch_dtype=torch.bfloat16
+)
+
+#Initialize pipeline
 nlp_pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
 
 def extractTopics(inputText: str):
@@ -27,8 +34,8 @@ def extractTopics(inputText: str):
     try:
         output = nlp_pipe(prompt, max_new_tokens=50, temperature=0.2, do_sample=False)
         raw_text = output[0]['generated_text']
-        
-        # Extract only the part after 'Topics:'
+
+#Extract only the part after 'Topics:'
         if 'Topics:' in raw_text:
             topics_part = raw_text.split('Topics:')[-1].strip()
         else:
@@ -39,15 +46,15 @@ def extractTopics(inputText: str):
 
         # Optional: remove duplicates
         topics = list(dict.fromkeys(topics))
-
+        print(type(topics))
         return topics
 
     except Exception as e:
         print(f"Error extracting topics: {e}")
         return []
 
-# Example usage
-if __name__ == "__main__":
+#Example usage
+if name == "main":
     test_text = "Homelessness and electric bills in Seattle, as well as rising healthcare costs."
     topics = extractTopics(test_text)
     print("Extracted Topics:", topics)
